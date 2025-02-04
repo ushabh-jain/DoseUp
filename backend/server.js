@@ -25,9 +25,14 @@ mongoose
   .catch((error) => console.log(`Error: ${error.message}`));
 
 // Schedule reminder emails every day at 8:00 AM
-cron.schedule("0 8 * * *", () => {
-  console.log("⏳ Running scheduled reminder job...");
-  sendReminders();
+cron.schedule("* * * * * *", async () => {
+  console.log("⏳ Running scheduled reminder job every second...");
+  try {
+    await sendReminders();
+    console.log("✅ Reminder emails sent successfully!");
+  } catch (error) {
+    console.error(`❌ Error in scheduled job: ${error.message}`);
+  }
 });
 
 
